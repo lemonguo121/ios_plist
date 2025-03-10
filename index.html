@@ -1,82 +1,72 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>lemon_os iOS App 下载</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        background-color: #f8f9fa;
-      }
-      .container {
-        text-align: center;
-        background-color: white;
-        padding: 40px;
-        border-radius: 12px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      h1 {
-        font-size: 22px;
-        margin-bottom: 20px;
-        color: #333;
-      }
-      #qr-code {
-        margin: 10px 0;
-      }
-      .btn {
-        background-color: #007bff;
-        color: white;
-        padding: 12px 24px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 20px;
-        transition: background-color 0.3s ease;
-      }
-      .btn:hover {
-        background-color: #0056b3;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>lemon_os iOS App 下载</h1>
-      <!-- 生成二维码的容器 -->
-      <canvas id="qr-code"></canvas>
-      <button class="btn" onclick="installApp()">点击下载 iOS 应用</button>
-    </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lemon_os iOS App 下载</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f8f9fa;
+    }
+    .container {
+      text-align: center;
+      background-color: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .btn {
+      background-color: #007bff;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>lemon_os iOS App 下载</h1>
+    <img id="qr-code" alt="二维码" />
+    <button class="btn" onclick="installApp()">点击下载 iOS 应用</button>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-    <script>
-      // 下载链接
-      const itmsLink =
-        "itms-services://?action=download-manifest&url=https://ghfast.top/https://raw.githubusercontent.com/lemonguo121/ios_plist/refs/heads/main/manifest.plist";
+  <script>
+    function generateQRCode(url) {
+      let qrApi = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(url);
+      document.getElementById("qr-code").src = qrApi;
+    }
 
-      // 生成二维码
-      const qrCodeCanvas = document.getElementById("qr-code");
-      QRCode.toCanvas(qrCodeCanvas, itmsLink, function (error) {
-        if (error) {
-          console.error("二维码生成失败", error);
-        } else {
-          console.log("二维码生成成功");
-        }
-      });
+    // 下载链接
+    const itmsLink = "itms-services://?action=download-manifest&url=https://ghfast.top/https://raw.githubusercontent.com/lemonguo121/ios_plist/refs/heads/main/manifest.plist";
 
-      // 点击按钮时处理下载
-      function installApp() {
-        window.location.href = itmsLink;
-      }
-    </script>
-  </body>
+    generateQRCode(itmsLink);
+
+    function installApp() {
+      window.location.href = itmsLink;
+    }
+  </script>
+</body>
 </html>
